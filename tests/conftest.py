@@ -2,7 +2,7 @@
 
 import pytest
 
-from goppai.go2048 import Tile
+from goppai.go2048.tile import Tile
 
 
 @pytest.fixture

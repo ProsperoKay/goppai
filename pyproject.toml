@@ -13,8 +13,11 @@ keywords = [
     "goppai",
     "puzzle",
     "game",
-    "cui",
     "2048",
+    "cli",
+    "terminal",
+    "python3",
+    "cli",
 ]
 readme = "readme.md"
 license = {file = "LICENSE"}
