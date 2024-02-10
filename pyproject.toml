@@ -27,7 +27,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.8"
-dependencies = []
+dependencies = [
+    'windows-curses ; platform_system=="Windows"'
+]
 
 
 [project.optional-dependencies]
