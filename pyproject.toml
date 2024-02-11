@@ -8,16 +8,14 @@ authors = [
     {name = "Prosperokay", email = "prosperokay@gmail.com"}
 ]
 version = "0.0.1"
-description = "Game set for developers to release stress with their console"
+description = "Game set for developers to release stress with the terminal"
 keywords = [
     "goppai",
-    "puzzle",
-    "game",
-    "2048",
+    "puzzles",
+    "games",
     "cli",
+    "cui",
     "terminal",
-    "python3",
-    "cli",
 ]
 readme = "readme.md"
 license = {file = "LICENSE"}
@@ -45,4 +43,4 @@ dev = [
 Homepage = "https://github.com/ProsperoKay/goppai"
 
 [project.scripts]
-goppai="goppai:main_cui"
+goppai="goppai:main"

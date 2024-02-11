@@ -1,2 +1,2 @@
-def main_cui():
+def main():
     print("Goppai is under development!")
