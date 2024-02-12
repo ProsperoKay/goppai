@@ -7,7 +7,7 @@ name = "goppai"
 authors = [
     {name = "Prosperokay", email = "prosperokay@gmail.com"}
 ]
-version = "0.0.1"
+version = "0.1.2-alpha.0"
 description = "Game set for developers to release stress with the terminal"
 keywords = [
     "goppai",
