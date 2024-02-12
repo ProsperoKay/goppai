@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/ProsperoKay/goppai/compare/v0.0.1...v0.1.0) (2024-02-12)
+
+
+### Features
+
+* add board structure ([ea635d8](https://github.com/ProsperoKay/goppai/commit/ea635d8b2cf536c5ef5269526c3f916b35a76d1d))
+
 ### 0.0.1 (2024-02-11)
 
 
