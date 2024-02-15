@@ -25,7 +25,29 @@ class Board:
                 next_y = y + delta_y
                 next_x = x + delta_x
 
-                self.tiles[y][x].move_to(self.tiles[next_y][next_x])
+                while (
+                    0 <= next_y < size
+                    and 0 <= next_x < size
+                    and self.tiles[next_y][next_x].getvalue() == 0
+                ):
+                    next_y += delta_y
+                    next_x += delta_x
+
+                
+
+                if next_y < 0 or next_y >= size or next_x < 0 or next_x >= size:
+                    self.tiles[y][x].move_to(
+                        self.tiles[next_y - delta_y][next_x - delta_x]
+                    )
+                elif (
+                    self.tiles[next_y][next_x].getvalue() == self.tiles[y][x].getvalue()
+                ):
+                    self.tiles[y][x].move_to(self.tiles[next_y][next_x])
+
+                # elif not (next_y == y + delta_y and next_x == x + delta_x):
+                #     self.tiles[y][x].move_to(
+                #         self.tiles[next_y - delta_y][next_x - delta_x]
+                #     )
 
     def reset(self):
 
