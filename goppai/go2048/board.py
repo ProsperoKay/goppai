@@ -33,8 +33,6 @@ class Board:
                     next_y += delta_y
                     next_x += delta_x
 
-                
-
                 if next_y < 0 or next_y >= size or next_x < 0 or next_x >= size:
                     self.tiles[y][x].move_to(
                         self.tiles[next_y - delta_y][next_x - delta_x]
@@ -53,6 +51,8 @@ class Board:
 
         size = len(self.tiles)
 
+        self.tiles = [[Tile() for _ in range(size)] for _ in range(size)]
+
         y = choice(range(size))
         x = choice(range(size))
         val = choice(DOMINANT_VALUE)
@@ -64,8 +64,8 @@ class Board:
         self.tiles[y][x].setvalue(val)
 
     def set_tiles(self, tiles):
-        row_size = len(self.tiles)
-        col_size = len(self.tiles[0])
+        row_size = col_size = len(self.tiles)
+
         if len(tiles) != row_size or len(tiles[0]) != col_size:
             raise ValueError(
                 f"List provided doesn't match the sizes of this board ({row_size} x {col_size})"
