@@ -12,7 +12,16 @@ class Board:
         self.tiles = [[Tile() for _ in range(size)] for _ in range(size)]
 
     def move_tiles(self, direction):
-        delta_y, delta_x = direction
+        """
+        Move the tiles in the given direction.
+
+        Args:
+            direction: A sting representing the direction in which to move the tiles.
+        """
+
+        directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
+
+        delta_y, delta_x = directions[direction]
 
         size = len(self.tiles)
 
@@ -37,17 +46,12 @@ class Board:
                     self.tiles[y][x].move_to(
                         self.tiles[next_y - delta_y][next_x - delta_x]
                     )
-                # elif (
-                #     self.tiles[next_y][next_x].getvalue() == self.tiles[y][x].getvalue()
-                # ):
-                #     self.tiles[y][x].move_to(self.tiles[next_y][next_x])
-
-                # elif not (next_y == y + delta_y and next_x == x + delta_x):
-                #     self.tiles[y][x].move_to(
-                #         self.tiles[next_y - delta_y][next_x - delta_x]
-                #     )
 
     def reset(self):
+        """
+        Reset the game board by creating a new set of tiles with random values,
+        and setting the values of two random tiles.
+        """
 
         size = len(self.tiles)
 
@@ -64,6 +68,18 @@ class Board:
         self.tiles[y][x].setvalue(val)
 
     def set_tiles(self, tiles):
+        """
+        Set the tiles of the board to the given values.
+
+        Args:
+            tiles (List[List[str]]): The new values for the tiles.
+
+        Raises:
+            ValueError: If the dimensions of the new tiles do not match the dimensions of the board.
+
+        Returns:
+            None
+        """
         row_size = col_size = len(self.tiles)
 
         if len(tiles) != row_size or len(tiles[0]) != col_size:
