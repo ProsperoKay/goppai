@@ -73,6 +73,7 @@ class Board:
                     new_tiles[new_y][new_x].setvalue(self.tiles[y][x].getvalue())
 
         self.tiles = new_tiles
+        
 
         return score
 
