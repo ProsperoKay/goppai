@@ -8,7 +8,7 @@ class Tile:
         self.__value = 0
 
     def setvalue(self, value):
-        """set tile value"""
+        """set tile value and return self"""
         self.__value = value
         return self
 
@@ -16,16 +16,16 @@ class Tile:
         """get tile value"""
         return self.__value
 
-    def move_to(self, tile):
-        """move tile value"""
-        if tile.getvalue() == 0:
-            tile.setvalue(self.__value)
-            self.__value = 0
-            return self.__value
+    def move_to(self, tile) -> int:
+        """move tile value to another tile"""
 
-        if tile.getvalue() == self.__value:
-            tile.setvalue(self.__value + tile.getvalue())
-            self.__value = 0
-            return tile.getvalue()
+        tile.setvalue(self.getvalue())
+        self.setvalue(0)
+        return self.__value
 
-        return -1
+    def merge_with(self, tile) -> int:
+        """merge tile value with another tile"""
+
+        tile.setvalue(self.getvalue() * 2)
+        self.setvalue(0)
+        return tile.getvalue()

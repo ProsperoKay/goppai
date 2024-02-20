@@ -8,64 +8,93 @@ DOMINANT_VALUE = [2, 2, 2, 2, 2, 2, 2, 4]
 
 
 class Board:
-    def __init__(self, size=4):
-        self.tiles = [[Tile() for _ in range(size)] for _ in range(size)]
+    """
+    Board of tiles
+    """
 
-    def move_tiles(self, direction):
+    DOMINANT_VALUE = [2, 2, 2, 4]
+
+    def __init__(self, size=4):
+        self.size = size
+        self.tiles = [[Tile() for _ in range(self.size)] for _ in range(self.size)]
+        self.reset()
+
+    def move_tiles(self, direction: str) -> int:
         """
         Move the tiles in the given direction.
 
         Args:
-            direction: A sting representing the direction in which to move the tiles.
+            direction: A string representing the direction in which to move the tiles.
+
+        Returns:
+            int: The score of the move.
         """
+        score = 0
 
         directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
-
         delta_y, delta_x = directions[direction]
 
-        size = len(self.tiles)
+        # Create a new grid
+        new_tiles = [[Tile() for _ in range(self.size)] for _ in range(self.size)]
 
-        for y in range(size):
-            for x in range(size):
+        # Traverse the grid in the correct order
+        traverse_order = {
+            "up": [(x, y) for x in range(self.size) for y in range(self.size)],
+            "down": [
+                (x, y) for x in range(self.size - 1, -1, -1) for y in range(self.size)
+            ],
+            "left": [(x, y) for y in range(self.size) for x in range(self.size)],
+            "right": [
+                (x, y) for y in range(self.size) for x in range(self.size - 1, -1, -1)
+            ],
+        }
 
-                if self.tiles[y][x].getvalue() == 0:
-                    continue
+        for x, y in traverse_order[direction]:
+            if self.tiles[y][x].getvalue() != 0:
+                new_y, new_x = y, x
 
-                next_y = y + delta_y
-                next_x = x + delta_x
-
+                # Keep moving the tile in the direction
                 while (
-                    0 <= next_y < size
-                    and 0 <= next_x < size
-                    and self.tiles[next_y][next_x].getvalue() == 0
+                    0 <= new_y + delta_y < self.size
+                    and 0 <= new_x + delta_x < self.size
+                    and new_tiles[new_y + delta_y][new_x + delta_x].getvalue() == 0
                 ):
-                    next_y += delta_y
-                    next_x += delta_x
+                    new_y += delta_y
+                    new_x += delta_x
 
-                if next_y < 0 or next_y >= size or next_x < 0 or next_x >= size:
-                    self.tiles[y][x].move_to(
-                        self.tiles[next_y - delta_y][next_x - delta_x]
+                # Merge the tiles if they have the same value
+                if new_tiles[new_y][new_x].getvalue() == self.tiles[y][x].getvalue():
+                    new_tiles[new_y][new_x].setvalue(
+                        new_tiles[new_y][new_x].getvalue() * 2
                     )
+                    score += new_tiles[new_y][new_x].getvalue()
+                else:
+                    # Move the tile to the new location
+                    new_tiles[new_y][new_x].setvalue(self.tiles[y][x].getvalue())
+
+        self.tiles = new_tiles
+
+        return score
+
+    def clear(self):
+        self.tiles = [[Tile() for _ in range(self.size)] for _ in range(self.size)]
 
     def reset(self):
-        """
-        Reset the game board by creating a new set of tiles with random values,
-        and setting the values of two random tiles.
-        """
+        self.tiles = [[Tile() for _ in range(self.size)] for _ in range(self.size)]
+        self.add_random_tile()
+        self.add_random_tile()
 
-        size = len(self.tiles)
-
-        self.tiles = [[Tile() for _ in range(size)] for _ in range(size)]
-
-        y = choice(range(size))
-        x = choice(range(size))
-        val = choice(DOMINANT_VALUE)
-        self.tiles[y][x].setvalue(val)
-
-        y = choice(range(size))
-        x = choice(range(size))
-        val = choice(DOMINANT_VALUE)
-        self.tiles[y][x].setvalue(val)
+    def add_random_tile(self):
+        y, x = choice(
+            [
+                (i, j)
+                for i in range(self.size)
+                for j in range(self.size)
+                if self.tiles[i][j].getvalue() == 0
+            ]
+        )
+        value = choice(self.DOMINANT_VALUE)
+        self.tiles[y][x].setvalue(value)
 
     def set_tiles(self, tiles):
         """
@@ -87,6 +116,7 @@ class Board:
                 f"List provided doesn't match the sizes of this board ({row_size} x {col_size})"
             )
 
+        self.clear()
         self.tiles = [
             [x.setvalue(y) for x, y in zip(i, j)] for i, j in zip(self.tiles, tiles)
         ]
