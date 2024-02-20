@@ -2,6 +2,6 @@ from . import goppai
 
 
 def main():
-    print("Goppai is under development!")
+    print("Goppai games is under development!", "Please wait!")
 
     goppai.goppai_window()
